@@ -1,0 +1,19 @@
+name: Contract Check
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-contracts:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Clarinet
+      run: |
+        curl -L https://github.com/hirosystems/clarinet/releases/download/v2.0.0/clarinet-linux-x64.tar.gz | tar xzf -
+        sudo mv clarinet /usr/local/bin/
+    - name: Check contract syntax
+      run: clarinet check
